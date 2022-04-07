@@ -23,6 +23,8 @@ class CartController extends Controller
         ->with('message', 'Je product is toegevoegd in je winkelwagen');
     }
 
+    
+
     public function cart()
     {
         
