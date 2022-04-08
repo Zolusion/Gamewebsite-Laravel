@@ -16,7 +16,7 @@ class ProductController extends Controller
         $products = Product::with('latest_price', 'category')->paginate(12);
         return view('open.products.index', compact('products'));
     }
-  
+
     public function show(Product $product)
     {
         $reviews = Review::where('product_id', '=', $product->id)->paginate(3);
@@ -40,4 +40,6 @@ class ProductController extends Controller
 
         return view('open.products.search', compact('products'));
     }
+
+
 }

@@ -20,12 +20,22 @@
 					Furkan Baykal
 				</a>
 				<div class="w-full md:w-auto mb-6 md:mb-0 text-center md:text-right">
-					<a href="dashboard" class="inline-block no-underline bg-black text-white text-sm py-2 px-3">Meld je aan</a>
+                    @guest
+                        @if(Route::has('register'))
+                            <a href="{{ route('register') }}" class="inline-block no-underline bg-black text-white text-sm py-2 px-3">Registreer</a>
+                        @endif
+					    <a href="{{ route('login') }}" class="inline-block no-underline bg-black text-white text-sm py-2 px-3">Login</a>
+                    @else
+                        <h1 class="text-sm text-gray-800 font-semibold m-0 p-0 leading-none">{{ Auth::user()->name }}</h1>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @endguest
 				</div>
 			</div>
 		</header>
 		<!-- /header -->
-		
+
 		<!-- navigation -->
 		<nav class="w-full bg-white md:pt-0 px-6 shadow-lg relative z-20 border-t">
 			<div class="container mx-auto max-w-4xl md:flex justify-between items-center text-sm md:text-md md:justify-start">
@@ -45,10 +55,10 @@
 			</div>
 		</nav>
 		<!-- /navigation -->
-		
+
 		<!-- /home content -->
 		@yield('content') <!-- bij de yield content zorgt er voor dat de producten tevoorschijn komen -->
-		
+
 		<!-- footer -->
 		<footer class="w-full bg-white px-6 border-t">
 			<div class="container mx-auto max-w-4xl py-6 flex flex-wrap md:flex-no-wrap justify-between items-center text-sm">

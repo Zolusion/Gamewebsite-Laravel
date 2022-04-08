@@ -7,8 +7,6 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\EmailsController;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Route;
-use App\User;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SmsController;
@@ -47,12 +45,6 @@ Route::group(['middleware' => ['role:customer|sales|admin']], function () {
     Route::get('/search', [Open\ProductController::class, 'search']);
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__ . '/auth.php';
-
 Route::get('/contact', function () {
     return view('contact');
 });
@@ -71,3 +63,18 @@ Route::get('/send-testenrollment', [TestsEnrollmentController::class, 'sendTestN
 Route::get('/sms', [SmsController::class, 'index']);
 Route::post('/products', [\App\Http\Controllers\CartController::class, 'cart'])
     ->name('cart.products');
+
+//
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+//Routes for shopping cart
+//adding product to shopping cart
+Route::get('/add-to-cart/{id}', [ProductController::class, 'getAddToCart'])
+    ->name('product.addToCart');
+
+
+
+require __DIR__ . '/auth.php';
+
